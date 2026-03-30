@@ -93,7 +93,10 @@ const comparisonData = [
 export const ComparisonSection: React.FC = () => {
   const [isActive, setIsActive] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
-  const isInView = useInView(sectionRef, { amount: 0.7 });
+  
+  // Mobile-aware threshold: 0.7 for desktop, 0.3 for mobile
+  const threshold = typeof window !== 'undefined' && window.innerWidth < 768 ? 0.3 : 0.7;
+  const isInView = useInView(sectionRef, { amount: threshold });
 
   useEffect(() => {
     let lockId: number | null = null;

@@ -64,12 +64,12 @@
 @layer components {
   /* Strict Typography Scale */
   .h1-hero { 
-    @apply text-4xl md:text-6xl lg:text-[5.5rem] leading-[1.1] font-bold tracking-wider text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]; 
+    @apply text-3xl md:text-6xl lg:text-[5.5rem] leading-[1.1] font-bold tracking-wider text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]; 
     font-family: 'Iceberg', ui-sans-serif, system-ui, sans-serif; 
   }
-  .h2-section { @apply text-4xl md:text-5xl lg:text-6xl font-display font-bold uppercase tracking-tight leading-[1.1] text-white; }
-  .h3-card { @apply text-xl md:text-2xl font-display font-bold uppercase tracking-tight leading-snug text-white; }
-  .h4-label { @apply text-[10px] md:text-xs font-mono font-bold uppercase tracking-[0.2em] text-electric; }
+  .h2-section { @apply text-3xl md:text-5xl lg:text-6xl font-display font-bold uppercase tracking-tight leading-[1.1] text-white; }
+  .h3-card { @apply text-lg md:text-2xl font-display font-bold uppercase tracking-tight leading-snug text-white; }
+  .h4-label { @apply text-[9px] md:text-xs font-mono font-bold uppercase tracking-[0.2em] text-electric; }
   
   /* Strict Body Text Scale */
   .body-xl { @apply text-xl md:text-2xl leading-relaxed text-white/80 font-medium; }
@@ -79,10 +79,10 @@
   
   /* Unified Buttons */
   .btn-primary { 
-    @apply flex items-center justify-center gap-2 bg-[#00D2FF] hover:bg-[#00B4FF] text-black font-bold px-8 py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(0,210,255,0.2)] hover:shadow-[0_0_30px_rgba(0,210,255,0.4)] hover:scale-[1.02] cursor-pointer outline-none; 
+    @apply flex items-center justify-center gap-2 bg-[#00D2FF] hover:bg-[#00B4FF] text-black font-bold px-6 py-3.5 md:px-8 md:py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(0,210,255,0.2)] hover:shadow-[0_0_30px_rgba(0,210,255,0.4)] hover:scale-[1.02] cursor-pointer outline-none; 
   }
   .btn-secondary { 
-    @apply flex items-center justify-center gap-2 bg-transparent border border-white/20 hover:border-white/40 text-white font-bold px-8 py-4 rounded-xl transition-all hover:bg-white/5 cursor-pointer outline-none hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]; 
+    @apply flex items-center justify-center gap-2 bg-transparent border border-white/20 hover:border-white/40 text-white font-bold px-6 py-3.5 md:px-8 md:py-4 rounded-xl transition-all hover:bg-white/5 cursor-pointer outline-none hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]; 
   }
 }
 
