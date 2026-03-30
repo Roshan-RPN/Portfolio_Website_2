@@ -1,0 +1,99 @@
+.portfolio-section {
+  position: relative;
+  padding: 7rem 0;
+  overflow: hidden;
+}
+
+.portfolio-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    var(--bg-primary) 0%,
+    rgba(11,12,16,0.78) 20%,
+    rgba(11,12,16,0.78) 80%,
+    var(--bg-primary) 100%
+  );
+  z-index: 1;
+}
+
+.portfolio-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.portfolio-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 700px;
+}
+
+.portfolio-authority {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.85;
+  max-width: 640px;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  perspective: 800px;
+}
+
+.portfolio-card {
+  padding: 2rem 1.75rem;
+  cursor: default;
+  will-change: transform;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-color: rgba(0,210,255,0.1);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.portfolio-card:hover {
+  border-color: color-mix(in srgb, var(--accent, #00D2FF) 50%, transparent);
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--accent, #00D2FF) 20%, transparent);
+}
+
+.portfolio-card-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.portfolio-card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.portfolio-card-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  flex: 1;
+}
+
+.portfolio-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.portfolio-tag {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 100px;
+  border: 1px solid;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}

@@ -1,0 +1,88 @@
+.vault-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.vault-door {
+  position: relative;
+  width: min(90vw, 800px);
+  height: min(70vw, 600px);
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.vault-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 40px rgba(0,0,0,0.8));
+}
+
+.vault-fissure {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -54%);
+  width: 200px;
+  height: 200px;
+  opacity: 0.3;
+  filter: blur(1px);
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+.fissure-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.fissure-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center,
+    rgba(0, 210, 255, 0.6) 0%,
+    rgba(139, 92, 246, 0.4) 35%,
+    transparent 70%
+  );
+  transform-origin: center;
+  will-change: transform, opacity;
+  animation: fissure-pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes fissure-pulse {
+  from { opacity: 0.6; transform: scale(0.95); }
+  to   { opacity: 1;   transform: scale(1.05); }
+}
+
+.vault-overlay {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.vault-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  opacity: 0.5;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(-6px); }
+}

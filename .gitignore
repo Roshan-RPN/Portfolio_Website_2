@@ -1,0 +1,21 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# Large Media & Redundant Folders
+Images/
+public/images/Images/
+*.mp4
+*.jpeg
+*.jpg
+*.png
+*.zip
+!public/assets/*.png
+!public/assets/*.jpg
+!public/images/*.avif
+!public/images/*.mp4

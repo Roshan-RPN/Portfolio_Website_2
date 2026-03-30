@@ -1,0 +1,10 @@
+/* App-level layout */
+.app {
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+/* Smooth section transitions */
+section + section {
+  /* Subtle gradient bridges between sections */
+}
