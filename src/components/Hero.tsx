@@ -116,7 +116,7 @@ export const Hero: React.FC<HeroProps> = ({ onAnimationComplete }) => {
             <motion.div 
               initial={{ opacity: 0, x: -100 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col gap-6 order-2 lg:order-1"
             >
               <div>
@@ -165,14 +165,14 @@ export const Hero: React.FC<HeroProps> = ({ onAnimationComplete }) => {
                 initial={{ y: 200, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ 
-                  duration: 1.2, 
+                  duration: 1.8, 
                   delay: 0.2,
                   ease: [0.16, 1, 0.3, 1]
                 }}
                 className="relative w-full max-w-[320px] lg:max-w-[400px] aspect-[4/5] rounded-3xl overflow-hidden border border-electric/30 shadow-[0_0_50px_rgba(0,112,255,0.2)]"
               >
                 <img
-                  src="/assets/Roshan 1.png"
+                  src="/assets/Roshan 2.jpeg"
                   alt="Roshan P Nambisan"
                   className="w-full h-full object-cover object-top transition-all duration-700"
                   referrerPolicy="no-referrer"
@@ -193,7 +193,7 @@ export const Hero: React.FC<HeroProps> = ({ onAnimationComplete }) => {
             <motion.div 
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col gap-6 order-3"
             >
               {/* Contact Info */}

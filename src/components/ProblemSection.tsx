@@ -80,7 +80,8 @@ export const ProblemSection: React.FC = () => {
   const [count, setCount] = useState(3);
   const [isBlasted, setIsBlasted] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
+  const amountThreshold = 0.85;
+  const isInView = useInView(sectionRef, { once: true, amount: amountThreshold });
 
   // Handle countdown
   useEffect(() => {
@@ -95,24 +96,29 @@ export const ProblemSection: React.FC = () => {
 
   // Centralised scroll lock — holds while countdown plays AND while cards animate in
   useEffect(() => {
-    let lockId: number | null = null;
+    let currentLockId: number | null = null;
     let unlockTimer: ReturnType<typeof setTimeout> | null = null;
+    let lockDelayTimer: ReturnType<typeof setTimeout> | null = null;
 
     if (isInView && !isBlasted) {
-      lockId = acquireLock();
-      sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Removed scrollIntoView because programmatic auto-scrolling fights with user swipe and causes jerking.
+      // Delay the actual hard lock so scroll momentum can settle naturally
+      lockDelayTimer = setTimeout(() => {
+        currentLockId = acquireLock();
+      }, 400); // Shorter delay since we removed the smooth scroll
     } else if (isInView && isBlasted) {
       // Keep locked while cards stagger in, then release
-      lockId = acquireLock();
+      currentLockId = acquireLock();
       unlockTimer = setTimeout(() => {
-        if (lockId !== null) releaseLock(lockId);
-        lockId = null;
+        if (currentLockId !== null) releaseLock(currentLockId);
+        currentLockId = null;
       }, 950);
     }
 
     return () => {
+      if (lockDelayTimer) clearTimeout(lockDelayTimer);
       if (unlockTimer) clearTimeout(unlockTimer);
-      if (lockId !== null) releaseLock(lockId);
+      if (currentLockId !== null) releaseLock(currentLockId);
     };
   }, [isInView, isBlasted]);
 

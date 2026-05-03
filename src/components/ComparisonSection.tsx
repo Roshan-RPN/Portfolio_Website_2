@@ -93,21 +93,36 @@ const comparisonData = [
 export const ComparisonSection: React.FC = () => {
   const [isActive, setIsActive] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   
-  // Mobile-aware threshold: 0.7 for desktop, 0.3 for mobile
-  const threshold = typeof window !== 'undefined' && window.innerWidth < 768 ? 0.3 : 0.7;
+  // Set threshold to 0.85 for both to ensure it's mostly in view
+  const threshold = 0.85;
   const isInView = useInView(sectionRef, { amount: threshold });
+
+  // Scroll to top of grid when system is activated
+  useEffect(() => {
+    if (isActive && scrollContainerRef.current) {
+      setTimeout(() => {
+        scrollContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 100);
+    }
+  }, [isActive]);
 
   useEffect(() => {
     let lockId: number | null = null;
+    let lockDelayTimer: ReturnType<typeof setTimeout> | null = null;
 
     if (isInView && !isActive) {
-      lockId = acquireLock();
-      sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Removed scrollIntoView because programmatic auto-scrolling fights with user swipe and causes jerking.
+      // Delay the actual hard lock so scroll momentum can settle naturally
+      lockDelayTimer = setTimeout(() => {
+        lockId = acquireLock();
+      }, 400); // Shorter delay since we removed the smooth scroll
     }
     // When isActive becomes true, no new lock is acquired — user unlocked it
 
     return () => {
+      if (lockDelayTimer) clearTimeout(lockDelayTimer);
       if (lockId !== null) releaseLock(lockId);
     };
   }, [isInView, isActive]);
@@ -117,13 +132,13 @@ export const ComparisonSection: React.FC = () => {
   const warningRed = '#FF3E3E';
 
   return (
-    <section ref={sectionRef} id="comparison" className="relative min-h-[100dvh] w-full bg-[#050505] overflow-hidden py-8 flex flex-col justify-center">
+    <section ref={sectionRef} id="comparison" className="relative h-[100dvh] w-full bg-[#050505] overflow-hidden pt-24 pb-8 flex flex-col">
       {/* Background Grid */}
       <div className="absolute inset-0 opacity-[0.05] pointer-events-none" 
            style={{ backgroundImage: `radial-gradient(${isActive ? premiumGreen : warningRed} 1px, transparent 1px)`, backgroundSize: '40px 40px' }} />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="text-center mb-4 shrink-0 mt-8">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 flex flex-col h-full w-full">
+        <div className="text-center mb-4 shrink-0">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -197,18 +212,22 @@ export const ComparisonSection: React.FC = () => {
         </div>
 
         {/* Comparison Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 relative flex-1 items-center content-center z-10 -mt-2">
-          {/* Connecting Nodes Visual */}
-          <div className="absolute inset-0 pointer-events-none z-0 opacity-20">
-            <svg className="w-full h-full">
-              <pattern id="node-grid" width="100" height="100" patternUnits="userSpaceOnUse">
-                <circle cx="50" cy="50" r="1" fill={isActive ? premiumGreen : warningRed} />
-              </pattern>
-              <rect width="100%" height="100%" fill="url(#node-grid)" />
-            </svg>
-          </div>
+        <div 
+          ref={scrollContainerRef}
+          className="relative flex-1 overflow-y-auto min-h-0 w-full pr-2 pb-4 md:[&::-webkit-scrollbar]:hidden md:[scrollbar-width:none]"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 relative z-10 pb-8">
+            {/* Connecting Nodes Visual */}
+            <div className="absolute inset-0 pointer-events-none z-0 opacity-20">
+              <svg className="w-full h-full">
+                <pattern id="node-grid" width="100" height="100" patternUnits="userSpaceOnUse">
+                  <circle cx="50" cy="50" r="1" fill={isActive ? premiumGreen : warningRed} />
+                </pattern>
+                <rect width="100%" height="100%" fill="url(#node-grid)" />
+              </svg>
+            </div>
 
-          {comparisonData.map((item, i) => (
+            {comparisonData.map((item, i) => (
             <motion.div
               key={item.id}
               initial={{ opacity: 0, y: 10 }}
@@ -308,6 +327,7 @@ export const ComparisonSection: React.FC = () => {
               </div>
             </motion.div>
           ))}
+          </div>
         </div>
       </div>
 
